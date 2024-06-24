@@ -1,0 +1,7 @@
+CREATE SCHEMA IF NOT EXISTS test;
+
+CREATE TABLE test.student (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  student_id VARCHAR(10),
+  name VARCHAR(100)
+);

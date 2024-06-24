@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: false
+  sql:
+    init:
+      # Nothing to init in this script, putting here to avoid it loading default data.sql in this module
+      data-locations: classpath:data-schema-script.sql
