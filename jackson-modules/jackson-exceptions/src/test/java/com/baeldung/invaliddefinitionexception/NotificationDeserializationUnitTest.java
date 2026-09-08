@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.fasterxml.jackson.module.paranamer.ParanamerModule;
 
 class NotificationDeserializationUnitTest {
@@ -37,6 +38,29 @@ class NotificationDeserializationUnitTest {
     void givenNotificationWithCreator_whenDeserializing_thenCorrect() throws Exception {
 
         NotificationWithCreator notification = objectMapper.readValue(JSON, NotificationWithCreator.class);
+
+        assertEquals("Server maintenance", notification.getMessage());
+        assertEquals(2, notification.getPriority());
+    }
+
+    @Test
+    void givenParameterNamesModule_whenDeserializingNotification_thenCorrect() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new ParameterNamesModule());
+
+        Notification notification = mapper.readValue(JSON, Notification.class);
+
+        assertEquals("Server maintenance", notification.getMessage());
+        assertEquals(2, notification.getPriority());
+    }
+
+    @Test
+    void givenFactoryMethodCreator_whenDeserializing_thenCorrect()
+        throws Exception {
+
+        NotificationWithFactory notification =
+            objectMapper.readValue(JSON, NotificationWithFactory.class);
 
         assertEquals("Server maintenance", notification.getMessage());
         assertEquals(2, notification.getPriority());
